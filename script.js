@@ -1,10 +1,17 @@
-alert(
-    "Welcome! This game uses browser alerts and the Developer Console for logs.\n\n" +
-        "To open the console:\n" +
-        "• Windows/Linux: Press F12 or Ctrl + Shift + J\n" +
-        "• Mac: Press Cmd + Option + J\n\n" +
-        "Type startGame() in the console and press Enter to begin.",
-);
+const rockBtn = document.querySelector(".rock");
+const paperBtn = document.querySelector(".paper");
+const scissorsBtn = document.querySelector(".scissors");
+
+const result = document.querySelector(".result");
+const score = document.querySelector(".score");
+
+// alert(
+//     "Welcome! This game uses browser alerts and the Developer Console for logs.\n\n" +
+//         "To open the console:\n" +
+//         "• Windows/Linux: Press F12 or Ctrl + Shift + J\n" +
+//         "• Mac: Press Cmd + Option + J\n\n" +
+//         "Type startGame() in the console and press Enter to begin.",
+// );
 
 const choices = ["Rock", "Paper", "Scissors"];
 
@@ -38,117 +45,9 @@ const art = {
 `,
 };
 
-console.log('Type "startGame()" to begin!');
-
-// Let the player start/restart from the console without refreshing
-window.startGame = game;
-window.playAgain = game;
-
-
-function game() {
-    let playing = true;
-    let roundCounter = 0;
-
-    while (playing) {
-        
-        let computerRoundScore = 0;
-        let playerRoundScore = 0;
-
-        console.log("STARTING ROCK, PAPER, SCISSORS");
-
-        while (computerRoundScore < 3 && playerRoundScore < 3) {
-            console.log(`======== ROUND ${++roundCounter} ========`);
-
-            let playerSelection = getPlayerSelection();
-
-            if (playerSelection === null) {
-                console.log("Game over: Cancelled by user");
-                alert("Game cancelled. Thanks for playing!");
-                return "Type playAgain() in the console to start a new game";
-            }
-
-            let computerSelection = computerPlay();
-
-            console.log(
-                `Player picked: ${playerSelection}\n${art[playerSelection]}`,
-            );
-            console.log(
-                `Computer picked: ${computerSelection}\n${art[computerSelection]}`,
-            );
-
-            let winner = playRound(playerSelection, computerSelection);
-
-            if (winner === "computer") {
-                
-                computerRoundScore++;
-
-                console.log(
-                    `COMPUTER WINS THIS ROUND! (${playerRoundScore} - ${computerRoundScore})`,
-                );
-                alert(
-                    `Computer WON!\n\nScores:\nPlayer: ${playerRoundScore}\nComputer: ${computerRoundScore}`,
-                );
-
-            } else if (winner === "player") {
-                playerRoundScore++;
-
-                console.log(
-                    `YOU WIN THIS ROUND! (${playerRoundScore} - ${computerRoundScore})`,
-                );
-
-                alert(
-                    `You beat the computer!\n\nScores:\nPlayer: ${playerRoundScore}\nComputer: ${computerRoundScore}`,
-                );
-                
-            } else {
-        
-                console.log(
-                    `DRAW (${playerRoundScore} - ${computerRoundScore})`,
-                );
-                alert("DRAW!");
-            }
-        }
-
-        if (playerRoundScore === 3) {
-            console.log(
-                `END OF GAME: You WIN! (${playerRoundScore} - ${computerRoundScore})`,
-            );
-
-            alert("Game over! You Win!");
-
-        } else {
-            console.log(
-                `END OF GAME: COMPUTER WINS! (${playerRoundScore} - ${computerRoundScore})`,
-            );
-
-            alert("Game over! Computer Wins!");
-        }
-
-        roundCounter = 0;
-        playing = confirm("Do you want to play again?");
-    }
-
-    return "Type playAgain() in the console to start a new game";
-}
-
-// gets the player's choice and returns it
-function getPlayerSelection() {
-    while (true) {
-        let input = prompt("Enter your choice (Rock / Paper / Scissors)");
-
-        if (input === null) {
-            return null;
-        }
-
-        let cleanedInput = capitalizeAndTrim(input);
-
-        if (choices.includes(cleanedInput)) {
-            return cleanedInput;
-        }
-
-        alert("Not a valid choice. Try again.");
-    }
-}
+let computerScore = 0;
+let playerScore = 0;
+let gameOver = false;
 
 // computerPlay function returns random move
 function computerPlay() {
@@ -158,26 +57,46 @@ function computerPlay() {
 
 // where a round is played and decided. should return the winner
 function playRound(playerSelection, computerSelection) {
-    
-    if (computerSelection === playerSelection) {
-        return "draw";
-    }
+    if (gameOver) return;
 
-    // combinations that results in a player win:
-    if (
+    console.log("==========");
+    console.log(`Computer picks ${computerSelection}\n${art[computerSelection]}`);
+    console.log(`Player picks ${playerSelection}\n${art[playerSelection]}`);
+
+    if (computerSelection === playerSelection) {
+        result.textContent = "Draw!";
+    } else if (
         (playerSelection === "Rock" && computerSelection === "Scissors") ||
         (playerSelection === "Paper" && computerSelection === "Rock") ||
         (playerSelection === "Scissors" && computerSelection === "Paper")
     ) {
-        return "player";
+        result.textContent = "You Win!";
+        playerScore++;
+    } else {
+        result.textContent = "Computer Wins!";
+        computerScore++;
     }
+    
+    score.textContent = `You ${playerScore} - ${computerScore} Computer`;
 
-    // if its neither a draw, nor a player win, it must be a computer win
-    return "computer";
+    if (playerScore === 5) {
+        result.textContent = "You Win the Game! 🎉";
+        gameOver = true;
+    } else if (computerScore === 5) {
+        result.textContent = "The Computer Wins the Game! 😔";
+        gameOver = true;
+    }
 }
 
-const capitalizeAndTrim = (word) => {
-    if (!word) return "";
-    const cleaned = word.trim();
-    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1).toLowerCase();
-};
+// event listeners
+rockBtn.addEventListener("click", () => {
+    playRound("Rock", computerPlay());
+});
+
+paperBtn.addEventListener("click", () => {
+    playRound("Paper", computerPlay());
+});
+
+scissorsBtn.addEventListener("click", () => {
+    playRound("Scissors", computerPlay());
+});
