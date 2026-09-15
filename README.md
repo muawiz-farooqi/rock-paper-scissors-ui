@@ -1,4 +1,4 @@
-# rock-paper-scissors
-A JavaScript only rock-paper-scissors game against the computer. First to 3 points wins.
+# rock-paper-scissors-ui
+A JavaScript rock-paper-scissors game with a graphical UI. Players make their selections by clicking buttons, while the game displays round results and the running score in the DOM. The game ends when either the player or computer reaches 5 points.
 
-Preview link: https://muawiz-farooqi.github.io/rock-paper-scissors/
+Preview link: []
