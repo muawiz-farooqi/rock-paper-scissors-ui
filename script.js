@@ -3,7 +3,11 @@ const paperBtn = document.querySelector(".paper");
 const scissorsBtn = document.querySelector(".scissors");
 
 const result = document.querySelector(".result");
-const score = document.querySelector(".score");
+const picks = document.querySelector(".picks");
+const playerScoreEl = document.querySelector(".player-score");
+const computerScoreEl = document.querySelector(".computer-score");
+const playAgainBtn = document.querySelector(".play-again");
+const choiceBtns = document.querySelectorAll(".choice");
 
 // alert(
 //     "Welcome! This game uses browser alerts and the Developer Console for logs.\n\n" +
@@ -14,6 +18,13 @@ const score = document.querySelector(".score");
 // );
 
 const choices = ["Rock", "Paper", "Scissors"];
+
+// emoji for each choice
+const emoji = {
+    Rock: "✊",
+    Paper: "✋",
+    Scissors: "✌️",
+};
 
 // ascii art for choices
 const art = {
@@ -63,29 +74,60 @@ function playRound(playerSelection, computerSelection) {
     console.log(`Computer picks ${computerSelection}\n${art[computerSelection]}`);
     console.log(`Player picks ${playerSelection}\n${art[playerSelection]}`);
 
+    picks.textContent = `${emoji[playerSelection]} vs ${emoji[computerSelection]}`;
+
     if (computerSelection === playerSelection) {
         result.textContent = "Draw!";
+        result.className = "result draw";
     } else if (
         (playerSelection === "Rock" && computerSelection === "Scissors") ||
         (playerSelection === "Paper" && computerSelection === "Rock") ||
         (playerSelection === "Scissors" && computerSelection === "Paper")
     ) {
         result.textContent = "You Win!";
+        result.className = "result win";
         playerScore++;
     } else {
         result.textContent = "Computer Wins!";
+        result.className = "result lose";
         computerScore++;
     }
     
-    score.textContent = `You ${playerScore} - ${computerScore} Computer`;
+    // restart the pop animation
+    void result.offsetWidth;
+    result.classList.add("pop");
+
+    playerScoreEl.textContent = playerScore;
+    computerScoreEl.textContent = computerScore;
 
     if (playerScore === 5) {
         result.textContent = "You Win the Game! 🎉";
-        gameOver = true;
+        endGame();
     } else if (computerScore === 5) {
         result.textContent = "The Computer Wins the Game! 😔";
-        gameOver = true;
+        endGame();
     }
+}
+
+// disable buttons and show play again
+function endGame() {
+    gameOver = true;
+    choiceBtns.forEach((btn) => (btn.disabled = true));
+    playAgainBtn.hidden = false;
+}
+
+// reset everything for a new game
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    gameOver = false;
+    playerScoreEl.textContent = 0;
+    computerScoreEl.textContent = 0;
+    picks.textContent = "Make your move";
+    result.textContent = "";
+    result.className = "result";
+    choiceBtns.forEach((btn) => (btn.disabled = false));
+    playAgainBtn.hidden = true;
 }
 
 // event listeners
@@ -100,3 +142,5 @@ paperBtn.addEventListener("click", () => {
 scissorsBtn.addEventListener("click", () => {
     playRound("Scissors", computerPlay());
 });
+
+playAgainBtn.addEventListener("click", resetGame);

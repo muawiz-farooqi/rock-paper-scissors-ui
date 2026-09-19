@@ -1,0 +1,220 @@
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* colors */
+:root {
+    --bg-start: #1e1b4b;
+    --bg-end: #0f172a;
+    --card: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.15);
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #a78bfa;
+    --win: #4ade80;
+    --lose: #f87171;
+    --draw: #cbd5e1;
+}
+
+/* full-screen page, everything centered */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    color: var(--text);
+    background: radial-gradient(circle at top, var(--bg-start), var(--bg-end) 70%);
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+}
+
+/* heading */
+h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #c4b5fd, #f0abfc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    margin-top: -24px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* scoreboard */
+.scoreboard {
+    display: flex;
+    gap: 16px;
+}
+
+.score-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 130px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+}
+
+.score-card .label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.player-score,
+.computer-score {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+/* choice buttons */
+.choices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+}
+
+.choice {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--card-border);
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.choice .emoji {
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.choice .name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.choice:hover {
+    transform: translateY(-6px) scale(1.05);
+    border-color: var(--accent);
+    box-shadow: 0 12px 32px rgba(167, 139, 250, 0.35);
+}
+
+.choice:active {
+    transform: scale(0.95);
+}
+
+.choice:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* results */
+.results {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.picks {
+    font-size: 1.5rem;
+    color: var(--muted);
+}
+
+.result {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.result.win {
+    color: var(--win);
+}
+
+.result.lose {
+    color: var(--lose);
+}
+
+.result.draw {
+    color: var(--draw);
+}
+
+/* pop animation when result changes */
+.result.pop {
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.play-again {
+    margin-top: 12px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.play-again:hover {
+    transform: scale(1.05);
+}
+
+/* smaller buttons on phones */
+@media (max-width: 600px) {
+    .choice {
+        width: 100px;
+        height: 100px;
+    }
+
+    .choice .emoji {
+        font-size: 2.5rem;
+    }
+
+    .choice .name {
+        font-size: 0.8rem;
+    }
+}

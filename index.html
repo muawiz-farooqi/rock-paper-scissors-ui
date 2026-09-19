@@ -1,29 +1,52 @@
 <!doctype html>
 <html>
-    <head>
-        <!-- encoding -->
-        <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rock, Paper, Scissors</title>
+    <meta name="description" content="A rock-paper-scissors game" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="game">
+      <h1>Rock, Paper, Scissors</h1>
+      <p class="subtitle">First to 5 wins</p>
 
-        <!-- page title -->
-        <title>Rock, Paper, Scissors</title>
-
-        <!-- page description -->
-        <meta name="description" content="A rock-paper-scissors game" />
-
-        <!-- js link -->
-        <script src="script.js" defer></script>
-    </head>
-    <body>
-        <h1></h1>
-        <div>
-            <button class="rock">Rock</button>
-            <button class="paper">Paper</button>
-            <button class="scissors">Scissors</button>
+      <!-- scoreboard -->
+      <div class="scoreboard">
+        <div class="score-card">
+          <span class="label">You</span>
+          <span class="player-score">0</span>
         </div>
-
-        <div class="results">
-            <p class="result"></p>
-            <p class="score"></p>
+        <div class="score-card">
+          <span class="label">Computer</span>
+          <span class="computer-score">0</span>
         </div>
-    </body>
+      </div>
+
+      <!-- choices -->
+      <div class="choices">
+        <button class="choice rock">
+          <span class="emoji">✊</span>
+          <span class="name">Rock</span>
+        </button>
+        <button class="choice paper">
+          <span class="emoji">✋</span>
+          <span class="name">Paper</span>
+        </button>
+        <button class="choice scissors">
+          <span class="emoji">✌️</span>
+          <span class="name">Scissors</span>
+        </button>
+      </div>
+
+      <!-- results -->
+      <div class="results">
+        <p class="picks">Make your move</p>
+        <p class="result"></p>
+        <button class="play-again" hidden>Play Again</button>
+      </div>
+    </main>
+  </body>
 </html>
