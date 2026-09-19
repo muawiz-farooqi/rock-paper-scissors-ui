@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-/* colors */
 :root {
     --bg-start: #1e1b4b;
     --bg-end: #0f172a;
@@ -19,7 +18,6 @@
     --draw: #cbd5e1;
 }
 
-/* full-screen page, everything centered */
 body {
     min-height: 100vh;
     display: flex;
@@ -38,7 +36,6 @@ body {
     text-align: center;
 }
 
-/* heading */
 h1 {
     font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 800;
